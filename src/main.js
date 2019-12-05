@@ -5,7 +5,6 @@ import {createTaskTemplate} from './components/task.js';
 import {createTaskEditTemplate} from './components/task-edit.js';
 import {createMoreButton} from './components/more-button.js';
 import {generateFilters} from './mock/filter.js';
-import {generateSingleTask} from './mock/tasks.js';
 import {generateTasks} from './mock/tasks.js';
 
 const TASK_COUNT = 8;

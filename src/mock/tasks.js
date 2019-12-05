@@ -1,4 +1,3 @@
-import {MONTHS} from '../const.js';
 import {COLORS} from '../const.js';
 
 const TASK_DESCRIPTION = [
@@ -57,7 +56,6 @@ const generateTags = (tags) => {
 
 const generateSingleTask = () => {
   const dueDate = Math.random() > 0.5 ? null : getRandomDate();
-  console.log (dueDate);
   return {
     description: getRandomArrayItem(TASK_DESCRIPTION),
     color: getRandomArrayItem(COLORS),
