@@ -25,10 +25,25 @@ render(siteMainElement, new SiteBoardComponent().getElement(), RenderPosition.BE
 const taskListElement = siteMainElement.querySelector(`.board__tasks`);
 const tasks = generateTasks(TASK_COUNT);
 
-render(taskListElement, new TaskEditComponent(tasks[0]).getElement(), RenderPosition.BEFOREEND);
+const renderTask = (task) => {
+  const taskComponent = new TaskComponent(task);
+  const taskEditComponent = new TaskEditComponent(task);
+
+  const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
+  editButton.addEventListener(`click`, () => {
+    taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+  });
+
+  const editForm = taskEditComponent.getElement().querySelector(`form`);
+  editForm.addEventListener(`submit`, () => {
+    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+  });
+  render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
+};
+
 let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
-tasks.slice(1, showingTasksCount)
-  .forEach((task) => render(taskListElement, new TaskComponent(task).getElement(), RenderPosition.BEFOREEND));
+tasks.slice(0, showingTasksCount)
+  .forEach((task) => renderTask(task));
 
 const boardElement = siteMainElement.querySelector(`.board`);
 const loadMoreButtonComponent = new LoadMoreButton();
