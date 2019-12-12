@@ -1,5 +1,5 @@
-import {formatTime} from '../const.js';
-import {MONTHS} from '../const.js';
+import {formatTime, MONTHS} from '../const.js';
+import {createElement} from '../utils.js';
 
 const createHashtagsMarkup = (hashtags) => {
   return hashtags
@@ -14,7 +14,8 @@ const createHashtagsMarkup = (hashtags) => {
     })
     .join(`\n`);
 };
-export const createTaskTemplate = (task) => {
+
+const createTaskTemplate = (task) => {
   const {description, tags, dueDate, color, repeatingDays} = task;
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
@@ -25,8 +26,8 @@ export const createTaskTemplate = (task) => {
   const repeatClass = Object.values(repeatingDays).some(Boolean) ? `card--repeat` : ``;
   const deadlineClass = isExpired ? `card--deadline` : ``;
 
-  return (`
-    <article class="card card--${color} ${repeatClass} ${deadlineClass}">
+  return (
+    `<article class="card card--${color} ${repeatClass} ${deadlineClass}">
       <div class="card__form">
         <div class="card__inner">
           <div class="card__control">
@@ -85,6 +86,28 @@ export const createTaskTemplate = (task) => {
           </div>
         </div>
       </div>
-    </article>
-`);
+    </article>`
+  );
 };
+
+export default class TaskComponent {
+  constructor(task) {
+    this._task = task;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTaskTemplate(this._task);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
