@@ -4,6 +4,9 @@ import SiteBoardComponent from './components/board.js';
 import TaskComponent from './components/task.js';
 import TaskEditComponent from './components/task-edit.js';
 import LoadMoreButton from './components/more-button.js';
+import SortComponent from './components/sort.js';
+import TaskListComponent from './components/task-list.js';
+import NoTasksComponent from './components/no-tasks.js';
 import {generateFilters} from './mock/filter.js';
 import {generateTasks} from './mock/tasks.js';
 import {render, RenderPosition} from './utils.js';
@@ -22,22 +25,42 @@ const filters = generateFilters();
 render(siteMainElement, new SiteFilterComponent(filters).getElement(), RenderPosition.BEFOREEND);
 
 render(siteMainElement, new SiteBoardComponent().getElement(), RenderPosition.BEFOREEND);
+
+const boardElement = siteMainElement.querySelector(`.board`);
+render(boardElement, new SortComponent().getElement(), RenderPosition.BEFOREEND);
+render(boardElement, new TaskListComponent().getElement(), RenderPosition.BEFOREEND);
 const taskListElement = siteMainElement.querySelector(`.board__tasks`);
 const tasks = generateTasks(TASK_COUNT);
 
-const renderTask = (task) => {
+const renderTask = (taskListElement, task) => {
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
+      replaceEditToTask();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  const replaceEditToTask = () => {
+    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+  };
+
+  const replaceTaskToEdit = () => {
+    taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+  };
+
   const taskComponent = new TaskComponent(task);
   const taskEditComponent = new TaskEditComponent(task);
 
   const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
   editButton.addEventListener(`click`, () => {
-    taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+    replaceTaskToEdit();
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
 
   const editForm = taskEditComponent.getElement().querySelector(`form`);
-  editForm.addEventListener(`submit`, () => {
-    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
-  });
+  editForm.addEventListener(`submit`, replaceEditToTask);
   render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
 };
 
@@ -45,7 +68,7 @@ let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 tasks.slice(0, showingTasksCount)
   .forEach((task) => renderTask(task));
 
-const boardElement = siteMainElement.querySelector(`.board`);
+
 const loadMoreButtonComponent = new LoadMoreButton();
 render(boardElement, loadMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
 
