@@ -10,7 +10,7 @@ const SHOWING_TASKS_COUNT_ON_START = 8;
 const TASK_SHOWING_ON_LOAD_MORE = 8;
 
 const renderTasks = (taskListElement, tasks, onDataChange, onViewChange) => {
-  tasks.map((task) => {
+  return tasks.map((task) => {
     const taskController = new TaskController(taskListElement, onDataChange, onViewChange);
     taskController.render(task, TaskControllerMode.DEFAULT);
     return taskController;
