@@ -8,12 +8,20 @@ export const WEEK_DAYS = [
   `su`
 ];
 
+export const COLOR = {
+  BLACK: `black`,
+  YELLOW: `yellow`,
+  BLUE: `blue`,
+  GREEN: `green`,
+  PINK: `pink`,
+};
+
 export const COLORS = [
-  `black`,
-  `yellow`,
-  `blue`,
-  `green`,
-  `pink`
+  COLOR.BLACK,
+  COLOR.YELLOW,
+  COLOR.BLUE,
+  COLOR.GREEN,
+  COLOR.PINK
 ];
 
 export const MONTHS = [
@@ -30,3 +38,13 @@ export const MONTHS = [
   `November`,
   `December`
 ];
+
+export const FilterType = {
+  ALL: `all`,
+  ARCHIVE: `archive`,
+  FAVORITES: `favorites`,
+  OVERDUE: `overdue`,
+  REPEATING: `repeating`,
+  TAGS: `tags`,
+  TODAY: `today`,
+};
