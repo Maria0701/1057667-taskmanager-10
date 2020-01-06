@@ -26,6 +26,7 @@ const createButtonMarkup = (name, isActive) => {
 
 const createTaskTemplate = (task) => {
   const {description: notSanitizedDescription, tags, dueDate, color, repeatingDays} = task;
+  console.log(task);
   const isExpired = dueDate instanceof Date && isOverdueDate(dueDate, new Date());
   const isDateShowing = !!dueDate;
 
@@ -73,17 +74,6 @@ const createTaskTemplate = (task) => {
               <div class="card__hashtag">
                 <div class="card__hashtag-list">
                   ${hashtags}
-                  <span class="card__hashtag-inner">
-                    <span class="card__hashtag-name">
-                      #personal
-                    </span>
-                  </span>
-
-                  <span class="card__hashtag-inner">
-                    <span class="card__hashtag-name">
-                      #important
-                    </span>
-                  </span>
                 </div>
               </div>
             </div>

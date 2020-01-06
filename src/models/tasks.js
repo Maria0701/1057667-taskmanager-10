@@ -3,7 +3,7 @@ import {FilterType} from '../const.js';
 
 export default class Tasks {
   constructor() {
-    this.tasks = [];
+    this._tasks = [];
     this._activeFilterType = FilterType.ALL;
     this._dataChangeHandlers = [];
     this._filterChangeHandlers = [];

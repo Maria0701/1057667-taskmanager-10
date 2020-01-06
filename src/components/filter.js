@@ -8,7 +8,6 @@ const getFilterNameById = (id) => {
 
 const createFilterMarkup = (filter, isChecked) => {
   const {name, count} = filter;
-
   return (
     `<input
       type="radio"
@@ -17,13 +16,13 @@ const createFilterMarkup = (filter, isChecked) => {
       name="filter"
       ${isChecked ? `checked` : ``}
     />
-    <label for="filter__all" class="filter__label"> ${name} <span class="filter__${name}-count">${count}</span></label
+    <label for="filter__${name}" class="filter__label"> ${name} <span class="filter__${name}-count">${count}</span></label
     >  `
   );
 };
 
 const createFilterTemplate = (filters) => {
-  const filtersMarkup = filters.map((it) => createFilterMarkup(it, it.checked === 0)).join(`\n`);
+  const filtersMarkup = filters.map((it) => createFilterMarkup(it, it.checked)).join(`\n`);
   return (
     `<section class="main__filter filter container">
       ${filtersMarkup}
