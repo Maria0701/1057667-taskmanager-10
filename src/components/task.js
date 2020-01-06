@@ -1,5 +1,6 @@
 import {formatTime, formatDate} from '../utils/common.js';
 import AbstractComponent from './abstract-component.js';
+import {isOverdueDate} from '../utils/common.js';
 
 const createHashtagsMarkup = (hashtags) => {
   return hashtags
@@ -24,12 +25,14 @@ const createButtonMarkup = (name, isActive) => {
 };
 
 const createTaskTemplate = (task) => {
-  const {description, tags, dueDate, color, repeatingDays} = task;
-  const isExpired = dueDate instanceof Date && dueDate < Date.now();
+  const {description: notSanitizedDescription, tags, dueDate, color, repeatingDays} = task;
+  console.log(task);
+  const isExpired = dueDate instanceof Date && isOverdueDate(dueDate, new Date());
   const isDateShowing = !!dueDate;
 
   const date = isDateShowing ? formatDate(dueDate) : ``;
   const time = isDateShowing ? formatTime(dueDate) : ``;
+  const description = window.he.encode(notSanitizedDescription);
   const hashtags = createHashtagsMarkup(Array.from(tags));
   const editButton = createButtonMarkup(`edit`, true);
   const archiveButton = createButtonMarkup(`archive`, task.isArchive);
@@ -71,17 +74,6 @@ const createTaskTemplate = (task) => {
               <div class="card__hashtag">
                 <div class="card__hashtag-list">
                   ${hashtags}
-                  <span class="card__hashtag-inner">
-                    <span class="card__hashtag-name">
-                      #personal
-                    </span>
-                  </span>
-
-                  <span class="card__hashtag-inner">
-                    <span class="card__hashtag-name">
-                      #important
-                    </span>
-                  </span>
                 </div>
               </div>
             </div>
