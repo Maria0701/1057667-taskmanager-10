@@ -26,7 +26,6 @@ const createButtonMarkup = (name, isActive) => {
 
 const createTaskTemplate = (task) => {
   const {description: notSanitizedDescription, tags, dueDate, color, repeatingDays} = task;
-  console.log(task);
   const isExpired = dueDate instanceof Date && isOverdueDate(dueDate, new Date());
   const isDateShowing = !!dueDate;
 
