@@ -38,6 +38,14 @@ export default class BoardController {
     this._tasksModel.setFilterChangeHandler(this._onFilterChange);
   }
 
+  hide() {
+    this._container.hide();
+  }
+
+  show() {
+    this._container.show();
+  }
+
   render() {
     const container = this._container.getElement();
     const tasks = this._tasksModel.getTasks();
@@ -160,7 +168,7 @@ export default class BoardController {
     this._renderTasks(tasks.slice(prevTasksCount, this._showingTasksCount));
 
     if (this._showingTasksCount >= tasks.length) {
-      remove(this._loadMoreButtoncomponent);
+      remove(this._loadMoreButtonComponent);
     }
   }
 
