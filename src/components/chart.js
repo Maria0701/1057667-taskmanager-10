@@ -91,7 +91,7 @@ const renderColorsChart = (colorsCtx, tasks) => {
     tooltips: {
       callbacks: {
         label: (tooltipItem, data) => {
-          const allData = data.dataset[tooltipItem.dtatsetIndex].data;
+          const allData = data.dataset[tooltipItem.datatsetIndex].data;
           const tooltipData = allData[tooltipItem.index];
           const total = allData.reduce((acc, it) => acc + parseFloat(it));
           const tooltipPercentage = Math.round((tooltipData / total) * 100);
@@ -342,7 +342,6 @@ export default class Statistics extends AbstractSmartComponent {
   }
 
   _renderCharts() {
-
     const element = this.getElement();
     this._applyFlatpickr(this.getElement().querySelector(`.statistic__period-input`));
 
@@ -360,7 +359,7 @@ export default class Statistics extends AbstractSmartComponent {
   _resetCharts() {
     if (this._daysChart) {
       this._daysChart.destroy();
-      this._tagsChart = null;
+      this._daysChart = null;
     }
 
     if (this._tagsChart) {
