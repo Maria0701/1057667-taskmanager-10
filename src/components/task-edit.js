@@ -13,26 +13,6 @@ const isAllowableDescriprionLength = (description) => {
   return length >= MIN_DESCRIPTION_LENGTH && length <= MAX_DESCRIPTION_LENGTH;
 };
 
-const parseFormData = (formData) => {
-  const repeatingDays = WEEK_DAYS.reduce((acc, day) => {
-    acc[day] = false;
-    return acc;
-  }, {});
-  const date = formData.get(`date`);
-
-  return {
-    description: formData.get(`text`),
-    color: formData.get(`color`),
-    tags: formData.getAll(`hashtag`),
-    dueDate: date ? new Date(date) : null,
-    repeatingDays: formData.getAll(`repeat`).reduce((acc, it) => {
-      acc[it] = true;
-      return acc;
-    }, repeatingDays),
-  };
-};
-
-
 const createColorsMarkup = (colors, currentColor) => {
   return colors
     .map((color) => {
@@ -259,8 +239,7 @@ export default class TaskEdit extends AbstractSmartComponent {
 
   getData() {
     const form = this.getElement().querySelector(`.card__form`);
-    const formData = new FormData(form);
-    return parseFormData(formData);
+    return new FormData(form);
   }
 
   setDeleteButtonClickHandler(handler) {
