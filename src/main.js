@@ -7,7 +7,7 @@ import TasksModel from './models/tasks.js';
 import {render, RenderPosition} from './utils/render.js';
 import StatisticsComponent from './components/chart.js';
 
-const AUTHORIZATION = `Basic dXNlckBwYXNzd29yZAo=`;
+const AUTHORIZATION = `Basic dXNlckBwYXNz1yZAo=`;
 const END_POINT = `https://htmlacademy-es-10.appspot.com/task-manager`;
 
 const dateTo = new Date();
