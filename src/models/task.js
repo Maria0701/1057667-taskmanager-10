@@ -10,7 +10,7 @@ export default class Task {
     this.isArchive = Boolean(data[`is_archived`]);
   }
 
-  toRaw() {
+  toRAW() {
     return {
       'id': this.id,
       'description': this.description,
@@ -32,6 +32,6 @@ export default class Task {
   }
 
   static clone(data) {
-    return new Task(data.toRaw());
+    return new Task(data.toRAW());
   }
 }

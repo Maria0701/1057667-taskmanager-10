@@ -28,14 +28,21 @@ const API = class {
   }
 
   createTask(task) {
-    console.lod(task);
+    return this._load({
+      url: `tasks`,
+      method: Method.POST,
+      body: JSON.stringify(task.toRAW()),
+      headers: new Headers({'Content-Type': `application/json`})
+    })
+      .then((response) => response.json())
+      .then(Task.parseTask);
   }
 
   updateTask(id, data) {
     return this._load({
       url: `tasks/${id}`,
       method: Method.PUT,
-      body: JSON.stringify(data.toRaw()),
+      body: JSON.stringify(data.toRAW()),
       headers: new Headers({'Content-Type': `application/json`})
     })
       .then((response) => response.json())
@@ -43,7 +50,7 @@ const API = class {
   }
 
   deleteTask(id) {
-    console.lod(id);
+    return this._load({url: `tasks/${id}`, method: Method.DELETE});
   }
 
   _load({url, method = Method.GET, body = null, headers = new Headers()}) {
